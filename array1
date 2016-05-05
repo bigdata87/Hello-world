@@ -1,0 +1,154 @@
+
+//1. Nhap vao mot mang co kich thuoc n
+//2. Xap xep cac phan tu cua mang theo thu tu tang dan
+//3. In ra phan tu lon nhat va so lan xuat hien cua phan tu do.
+//4. Chen mot so vao vi tri thu i cua mang va in ra.
+//5. Tim phan tu xuat hien nhieu nhat trong mang
+//6. Tim so nguyen to trong mang
+#include <stdio.h>
+#include <conio.h>
+#include<math.h>
+//1. Ham nhap vao mot mang co kich thuoc n
+int nhap(float a[],int n){
+	int i;
+	printf("\nNhap vao cac phan tu cua mang:");
+	for(i=0;i<n;i++)
+	{
+		printf("\n\t a[%d]=  ",i);
+		scanf("%f",&a[i]);
+	}
+}
+//2. Ham sap xep cac phan tu cua mang theo thu tu tang dan.
+int xapxep(float a[],int n){
+	int i, j;
+	float temp;
+	for(i=0;i<n-1;i++){
+		for(j=i+1;j<n;j++){
+			if(a[i]>a[j]){
+				temp=a[i];
+				a[i]=a[j];
+				a[j]=temp;
+			}
+		}
+	}
+	printf("\n Day sau khi xap xep la: ");
+	for(i=0;i<n;i++)
+		printf("\n %.2f",a[i]);
+}
+//3. Ham in ra phan tu lon nhat cua mang va so phan tu lon nhat.
+float maxmin(float a[], int n){
+	int i, cout=0;
+	float max;
+	max=a[0];
+	for(i=1;i<n;i++){
+		if(max<a[i])
+			max=a[i];
+	}
+	printf("\n Phan tu co gia tri lon nhat la: %.2f",max);
+	for(i=0;i<n;i++){
+		if(max==a[i]){
+			cout++;
+			printf("\n i=%d",i);
+		}
+	}
+	printf("\n Phan tu lon nhat xuat hien %d lan\n", cout);
+}
+// 4. Chen mot so vao vi tri thu i cua mang 
+int chenso(float a[], int n){
+	int i,j;
+	float so_moi;
+	printf("\n Nhap vao so can chen: ");
+	scanf("%f", &so_moi);
+	printf("\n Nhap vao vi tri can chen so moi: ");
+	scanf("%d",&j);
+	for(i=n;i>=j;i--){
+		a[i]=a[i-1];
+		printf("\n a[%d]=%f",i,a[i]);
+	}
+	a[j-1]=so_moi;
+	printf("\n Mang moi sau khi chen la: ");
+	for(i=0;i<n+1;i++){
+		printf("\n\t a[%d]=%0.1f", i,a[i]);
+	}
+}
+//5. Tim phan tu xuat hien nhieu nhat trong mang
+// chua lam duoc van de la so phan tu xuat hien = nhau.
+int xuathien(float a[],int n){
+	int i, j, cout=1, max=0;
+	float temp;
+	for(i=0;i<n;i++){
+		for(j=i+1;j<n;j++){
+			if(a[i]==a[j])
+				cout++;
+		}
+		if (max<=cout){
+				max=cout;
+				temp=a[i];
+		}
+		cout=1;
+	}
+		printf("\n Phan tu %f xuat hien nhieu nhat la %d lan",temp, max);
+			
+}
+
+// Tim so nguyen to trong mang
+// Nhung o day ta dang xet chuoi la so khong nguyen.
+int nguyento(int a[], int n){
+	int i,j, flagnguyento;
+	printf("\n Cac so nguyen to trong day la: ");
+	for(i=0;i<n;i++){
+		flagnguyento=0;
+		for(j=2; j<=sqrt(a[i]); j++){
+			if(a[i]%j==0){
+				flagnguyento=1;
+				break;
+			}
+		}
+		if(flagnguyento==0)
+			printf("\n a[%d]=%d", i, a[i]);
+	}
+}
+
+int main(){
+	int i,n, cout, luachon,temp=0;
+	float a[100], max;
+	printf("\n\n\t DAY LA MENU LUA CHON");
+	printf("\n1. Nhap vao mot mang.\n2. Sap xep lai mang theo thu tu tang dan.");
+	printf("\n3. In ra phan tu lon nhat cua mang");
+	printf("\n4. Chen mot so vao mang");
+	printf("\n5. Tim phan tu xuat hien nhieu nhat trong mang");
+	printf("\n7. Chan roi! Thoat ra thoi! ");
+	while(temp!=1){
+		printf("\n\n\t. BAN SE LUA CHON SO: ");
+		scanf("%d",& luachon);
+		switch (luachon){
+			case 1: // Ban phai nhap so 1 truoc het!
+				printf("\n Nhap vao kich thuoc cua mang n: ");
+				scanf("%d",&n);
+				nhap(a,n);
+				break;
+			case 2:
+				xapxep(a,n);
+				break;
+			case 3:
+				maxmin(a,n);
+				break;
+			case 4:
+				chenso(a,n);
+				break;
+			case 5: 
+				xuathien(a,n);
+				break;
+			case 6: 
+				nguyento(a,n);
+				break;
+			case 7: // Thoat khoi vong lap while
+				temp=1;
+			default: 
+				printf("\n Hay nhap vao cac so tu 1 toi 7 ma thoi");
+		}
+	}
+	system("pause");
+	return 0;
+	
+}
